@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Khata Book</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --paper: #0B0E14;
+      --panel: #141923;
+      --rule: #222B3D;
+      --rule-strong: #323F58;
+      --ink: #E7ECF6;
+      --ink-soft: #97A4BC;
+      --margin: #E5535C;
+      --accent: #8FAAFF;
+      --accent-ink: #0F1730;
+      box-sizing: border-box;
+    }
+
+    *, *::before, *::after {
+      box-sizing: inherit;
+    }
+
+    body {
+      margin: 0;
+      /* Rich background gradient with subtle glow */
+      background: radial-gradient(circle at 50% 20%, #1A2235 0%, var(--paper) 70%);
+      color: var(--ink);
+      font-family: 'Hind', 'Noto Sans Devanagari', system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Decorative ambient light circles in background */
+    body::before {
+      content: "";
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: rgba(143, 170, 255, 0.04);
+      border-radius: 50%;
+      top: -100px;
+      left: -100px;
+      z-index: 0;
+      filter: blur(60px);
+    }
+
+    body::after {
+      content: "";
+      position: absolute;
+      width: 350px;
+      height: 350px;
+      background: rgba(229, 83, 92, 0.04);
+      border-radius: 50%;
+      bottom: -80px;
+      right: -80px;
+      z-index: 0;
+      filter: blur(60px);
+    }
+
+    .login-card {
+      position: relative;
+      z-index: 1;
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      padding: 40px 36px;
+      width: min(420px, 100%);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Red Ledger Margin Line */
+    .login-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 20px;
+      width: 2px;
+      background: var(--margin);
+      opacity: 0.85;
+      border-radius: 2px;
+    }
+
+    .brand {
+      margin-bottom: 28px;
+      padding-left: 12px;
+    }
+
+    .brand h1 {
+      font-family: 'Baloo 2', sans-serif;
+      font-size: 1.9rem;
+      margin: 0;
+      color: var(--ink);
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+    }
+
+    .brand p {
+      margin: 6px 0 0;
+      font-size: 0.9rem;
+      color: var(--ink-soft);
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 20px;
+      padding-left: 12px;
+    }
+
+    .field label {
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+      font-weight: 500;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1px solid var(--rule-strong);
+      border-radius: 8px;
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .field input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(143, 170, 255, 0.15);
+    }
+
+    .btn-login {
+      width: calc(100% - 12px);
+      margin-left: 12px;
+      margin-top: 10px;
+      padding: 12px 16px;
+      background: var(--accent);
+      color: var(--accent-ink);
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-login:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+
+    .error-msg {
+      color: var(--margin);
+      font-size: 0.85rem;
+      margin-top: 14px;
+      padding-left: 12px;
+      display: none;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-card">
+    <div class="brand">
+      <h1>Khata Book</h1>
+      <p>Shop credit ledger login</p>
+    </div>
+
+    <form id="loginForm" onsubmit="handleLogin(event)">
+      <div class="field">
+        <label for="username">Username or Email</label>
+        <input type="text" id="username" placeholder="Enter username" required autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter password" required>
+      </div>
+
+      <button type="submit" class="btn-login">Login</button>
+      <div id="errorMsg" class="error-msg">Invalid credentials. Try Again</div>
+    </form>
+  </div>
+
+  <script>
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+      window.location.href = 'Khata Book app.html';
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+
+      if (user === 'Prathamesh' && pass === '1234') {
+        localStorage.setItem('isLoggedIn', 'true');
+        window.location.href = 'Khata Book app.html';
+      } else {
+        document.getElementById('errorMsg').style.display = 'block';
+      }
+    }
+  </script>
+
+</body>
+</html>
