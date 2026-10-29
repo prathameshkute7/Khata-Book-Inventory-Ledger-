@@ -207,13 +207,14 @@
       const user = document.getElementById('username').value;
       const pass = document.getElementById('password').value;
 
-      // Aisa check hoga wahan:
-if (username === "Prathamesh" && password === "1234") {
-    // Login successful
-    window.location.href = "Khata Book app.html"; // ya jo bhi main app page ka naam ho
-} else {
-    alert("Invalid Credentials");
-}
+      // Yahan variables 'user' aur 'pass' hone chahiye:
+      if (user === "Prathamesh" && pass === "1234") {
+          // Login successful
+          localStorage.setItem('isLoggedIn', 'true'); // Session save karne ke liye
+          window.location.href = "Khata Book app.html"; 
+      } else {
+          alert("Invalid Credentials");
+      }
     }
   </script>
 
